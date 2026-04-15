@@ -1,0 +1,19 @@
+# Dependencies
+node_modules/
+
+# Build / render output
+dist/
+out/
+
+# Generated project data (slides, audio, config)
+public/current/
+
+# Environment variables
+.env
+
+# Build artifacts
+tsconfig.tsbuildinfo
+
+# OS
+.DS_Store
+Thumbs.db
