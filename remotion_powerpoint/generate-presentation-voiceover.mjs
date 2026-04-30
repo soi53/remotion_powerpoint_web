@@ -5,6 +5,7 @@ import path from "path";
 // ── 환경변수 로드 ────────────────────────────────────────────────────
 const env = readFileSync(".env", "utf-8");
 const apiKey = env.match(/ELEVENLABS_API_KEY=(.+)/)?.[1]?.trim();
+const isPaid = env.match(/ELEVENLABS_PLAN=paid/i) !== null;
 
 if (!apiKey) {
   console.error("❌ ELEVENLABS_API_KEY not found in .env");
@@ -219,8 +220,9 @@ for (let i = 0; i < slides.length; i++) {
   const isLast = i === slides.length - 1 ||
     !slides.slice(i + 1).some((s) => s.narration?.trim());
   if (!isLast) {
-    process.stdout.write("   ⏳ 20초 대기...\r");
-    await new Promise((r) => setTimeout(r, 20_000));
+    const waitMs = isPaid ? 1_000 : 20_000;
+    process.stdout.write(`   ⏳ ${waitMs / 1000}초 대기...\r`);
+    await new Promise((r) => setTimeout(r, waitMs));
   }
 }
 
